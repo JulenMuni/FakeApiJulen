@@ -1,28 +1,110 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title slot="primary">
-      Recordatorio de brochetas
-    </ion-title>
-  </ion-toolbar>
+
 </ion-header>
-<ion-content>
-  <div class="ion-padding">
-    <ion-list>
-      <ion-item *ngFor="let skewer of skewers" (click)="skewerTapped(skewer)">
-        <ion-thumbnail slot="start">
-          <img src="{{skewer.cover}}">
-        </ion-thumbnail>
-        <ion-label> {{skewer.name}}</ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
+<ion-content padding>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-input placeholder="Introduce Nombre" [(ngModel)]="name"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input placeholder="Introduce ingredientes" [(ngModel)]="ingredientes"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input placeholder="Introduce calorias" [(ngModel)]="calorias"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input placeholder="Introduce Portada" [(ngModel)]="cover"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input placeholder="Introduce Descripción" [(ngModel)]="description"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <ion-button (click)="createRecord()" [disabled]="!name || !ingredientes || !calorias||
+ !cover || !description">
+          <ion-icon size="small" slot="icon-only" name="add"></ion-icon>
+          &nbsp;Añadir brocheta
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-card *ngFor="let item of skewers">
+    <span *ngIf="!item.isEdit; else elseBlock">
+      <img src="{{item.cover}} ">
+      <ion-card-header>
+        <ion-card-title>{{item.name}} : {{item.ingredientes}} </ion-card-title>
+        <ion-card-subtitle>Calorias: {{item.calorias}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label>{{item.description}}</ion-label>
+        <ion-button shape="round" color="secondary" size="small" (click)="editRecord(item)">
+          <ion-icon size="small" slot="icon-only" name="create">
+            </ion-icon>
+        </ion-button>
+        <ion-button shape="round" color="danger" size="small" (click)="removeRecord(item.id)">
+          <ion-icon size="small" slot="icon-only" name="trash">
+            </ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </span>
+    <ng-template #elseBlock>
+      <ion-card-header>
+        <ion-card-title>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                Edit
+              </ion-col>
+              <ion-col>
+                <ion-button fill="clear" color="medium" size="small" (click)="item.isEdit = false">
+                  Cancel
+                </ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button fill="outline" color="success" size="small" (click)="updateRecord(item)">
+                  Update
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label><strong>Brocheta</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="item.editName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Ingredientes</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="item.editIngredientes">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Calorias</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="item.editCalorias"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Portada</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="item.editCover">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Descripción</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="item.editDescription"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ng-template>
+  </ion-card>
 </ion-content>
-<ion-toolbar>
-  
-  <ion-title slot="primary">
-    Desarrollo de Interfaces
-  </ion-title>
-</ion-toolbar>

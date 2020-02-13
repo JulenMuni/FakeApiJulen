@@ -14,7 +14,7 @@ export class CreatePage implements OnInit {
   skewerForm: FormGroup;
   constructor(
     private router: Router,
-    private skewerdbService: SkewerdbService,
+    // private skewerdbService: SkewerdbService,
     public toastController: ToastController
   ) { }
   ngOnInit() {
@@ -54,7 +54,7 @@ export class CreatePage implements OnInit {
     this.skewer = this.skewerForm.value;
     let nextKey = this.skewer.name.trim();
     this.skewer.id = nextKey;
-    this.skewerdbService.setItem(nextKey, this.skewer);
+    // this.skewerdbService.setItem(nextKey, this.skewer);
     console.warn(this.skewerForm.value);
   }
 }
